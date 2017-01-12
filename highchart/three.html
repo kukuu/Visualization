@@ -1,0 +1,67 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="googlebot" content="noindex, nofollow" />
+  <title>Interactive Chat with JS</title>
+  <style type="text/css">
+    body {
+      font-family: helvetica;
+      font-size: 16px;
+    }
+
+    .bars {
+      background-color: blue;
+      height: 25px;
+      margin: 10px 0 0 0;
+    }
+
+    .number {
+      color: white;
+      text-align: right;
+      padding: 5px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="bar0" class="bars">
+    <p id="bartext0" class="number"></p>
+  </div>
+  <div id="name0"></div>
+
+  <div id="bar1" class="bars">
+    <p id="bartext1" class="number"></p>
+  </div>
+  <div id="name1"></div>
+
+  <div id="bar2" class="bars">
+    <p id="bartext2" class="number"></p>
+  </div>
+  <div id="name2"></div>
+
+  <script type="text/javascript">
+    var cities = [
+      { name: "Austin",
+       population: 542
+     },
+      { name: "Forth Worth",
+       population: 777
+     },
+      { name: "Lubock",
+       population: 236
+     }
+    ];
+
+    for(var i=0; i<cities.length;i++){
+      document.getElementById("name"+i).innerHTML = cities[i].name;
+      document.getElementById("bartext"+i).innerHTML = cities[i].population;
+      document.getElementById("bar"+i).style.width = cities[i].population + "px";
+    }
+  </script> 
+</body>
+</html>
+

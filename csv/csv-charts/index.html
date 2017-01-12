@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="http://mbostock.github.com/d3/d3.js"></script>
+	<script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/jqBarGraph.js"></script>
+    <link rel="stylesheet" href="css/styles.css" type="text/css" />
+	<script type="text/javascript">
+		d3.text("ncc.csv", function(datasetText) {//text() to load
+
+		var parsedCSV = d3.csv.parseRows(datasetText);//call to a helper function parseRows
+		
+		var sampleHTML = d3.select("#result")// Now construct a table and append  to the selecto
+		    .append("table")
+		    .style("border-collapse", "collapse")
+		    .style("border", "2px black solid")
+		
+		    .selectAll("tr")
+		    .data(parsedCSV)
+		    .enter().append("tr")
+		
+		    .selectAll("td")
+		    .data(function(d){return d;})
+		    .enter().append("td")
+		    .style("border", "1px black solid")
+		    .style("padding", "3px")
+			//add events calllback for mouseover and mouseout
+		    .on("mouseover", function(){d3.select(this).style("background-color", "aliceblue")})
+		    .on("mouseout", function(){d3.select(this).style("background-color", "white")})
+		    .text(function(d){return d;})//load csv
+		    .style("font-size", "12px");
+		});
+    </script>
+	
+</head>
+<body>
+	<h1><a href="http://www.goldhawk-college.com/istudio/profile.html" class="portfolio">Alexander Adu-Sarkodie</a><br /><span>NCC Analytics and Bar Graph </span></h1>
+
+	<p class="headText">This Bar Graph is compatible with Safari 2+, Internet Explorer 6+, Firefox 2+, Google Chrome 3+, Opera 9+. For dynamic user updating of table execute the CSV link below. Edit, save and reload the table in the browser window</p>
+	<p>
+		<a href="ncc.csv" class="csv">CSV</a> 
+		<span class="sort"><a href="javascript:void(0);" id="simpleSortAsc">sort ascending</a> |  
+	    <a href="javascript:void(0);" id="simpleSortDesc">sort descending</a></span>
+	</p>
+		
+    <div class="content">
+		<div id="result"></div><!--This is the container for the CSV-->
+	    <div id="exampleSimple"></div><!--This is the container for the graph-->
+	</div>	
+	    <script>
+	        arrayOfData = new Array(
+		    [3, 1, '#222222'],
+		    [20, 2, '#7D252B'],
+		    [40, 3, '#EB9781'],
+		    [6, 4, '#FFD2B5'],
+		    [9, 5, '#4A4147']
+	    );
+
+	     arrayOfDataForSort = new Array(
+			    [40, 3, '#222222'],
+			    [20, 2, '#7D252B'],
+			    [9, 5, '#EB9781'],
+			    [6, 4, '#FFD2B5'],
+			    [3, 1, '#4A4147']
+	    );
+
+
+	        $('#exampleSimple').jqbargraph({ data: arrayOfData });//This piece of code binds all the properties of the graph and passes it on to the div that displays it.
+
+			$('#exampleSimple').prepend("<div class='mainWrapper'><div class='rotateObj'><div class='title'>Number of items</div></div></div>")
+
+			 $('#exampleSimple').append("<p class='response-time'>Page response time per sec</p>")
+	        //The script below updates different properties of the bar chart. Sorting 
+
+	        $('#simpleSortAsc').click(function () {
+	            $('#exampleSimple').html('');
+	            $('#exampleSimple').jqbargraph({ data: arrayOfData, sort: 'asc' });
+	        });
+
+	        $('#simpleSortDesc').click(function () {
+	           $('#exampleSimple').html('');
+	            $('#exampleSimple').jqbargraph({ data: arrayOfData, sort: 'desc' });
+	        });
+	    </script>
+	
+</body>
+</html>

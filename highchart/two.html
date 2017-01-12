@@ -1,0 +1,58 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="googlebot" content="noindex, nofollow" />
+  <script type="text/javascript" src="http://code.jquery.com/jquery-git.js"></script>
+  <title>Highcharts test tool by highcharts</title>
+  <script type='text/javascript'>
+
+      $(function () {
+          $('#container').highcharts({
+              chart: {
+                  type: 'bar'
+              },
+              title: {
+                  text: 'Fruit Consumption'
+              },
+              xAxis: {
+                  categories: ['Apples', 'Bananas', 'Oranges']
+              },
+              yAxis: {
+                  title: {
+                      text: 'Fruit eaten'
+                  }
+              },
+              series: [{
+                  name: 'Jane',
+                  data: [1, 0, 4]
+              }, {
+                  name: 'John',
+                  data: [5, 7, 3]
+              }],
+          });
+      });
+
+</script>
+
+  
+</head>
+
+<body>
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+<div id="container" style="height: 300px"></div>
+    <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "kh5jY";
+      }], "*")
+    }
+  </script>
+</body>
+
+</html>
+
