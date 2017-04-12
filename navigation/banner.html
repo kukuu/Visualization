@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.js"></script>
+    <script type="text/javascript" src="https://fb.me/react-with-addons-0.14.7.js"></script>
+    <script type="text/javascript" src="https://fb.me/react-dom-0.14.7.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>REACT  navigation menu</title>
+
+    <script type="application/javascript;version=1.7" language="JavaScript 1.7">
+
+      var MenuExample = React.createClass({
+
+          getInitialState: function(){
+              return { focused: 0 };
+          },
+
+          clicked: function(index){
+
+              // The click handler will update the state with
+              // the index of the focused menu entry
+
+              this.setState({focused: index});
+          },
+
+          render: function() {
+
+              // Here we will read the items property, which was passed
+              // as an attribute when the component was created
+
+              var self = this;
+
+              // The map method will loop over the array of menu entries,
+              // and will return a new array with <li> elements.
+
+              return (
+                  <div>
+                      <ul>{ this.props.items.map(function(m, index){
+              
+                          var style = '';
+              
+                          if(self.state.focused == index){
+                              style = 'focused';
+                          }
+              
+                          // Notice the use of the bind() method. It makes the
+                          // index available to the clicked function:
+              
+                          return <li key={index} className={style} onClick={self.clicked.bind(self, index)}>{m}</li>;
+              
+                      }) }
+                              
+                      </ul>
+                      
+                      <p>Selected: {this.props.items[this.state.focused]}</p>
+                  </div>
+              );
+
+          }
+      });
+
+      // Render the menu component on the page, and pass an array with menu options
+
+      ReactDOM.render(
+          <MenuExample items={ ['Home', 'Analyst', 'Supervisor', 'Administrator'] } />,
+          document.getElementById('container')
+      );
+    </script> 
+  </head>
+  <body>
+
+    <!-- This element's contents will be replaced with your component. -->
+    <div id="container"></div>
+
+   <!--   <a style="margin-top:200px;" href="file:///C:/Users/Alexander/Documents/FT/notes/index.html">Back</a> -->
+    <script src="https://facebook.github.io/react/js/jsfiddle-integration-babel.js"></script>
+  </body>
+</html>
+
