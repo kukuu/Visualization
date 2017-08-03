@@ -36,10 +36,11 @@ d3DemoApp.controller('AppCtrl', function AppCtrl ($scope, $http) {
     var days = Math.floor((dateN - date0) / 86400000) + 1;
 
     // map authors and indexes
-    var uniqueAuthors = []; // map index -> author
+    var uniqueAuthors = []; // map index -> author. Add to bucket
     var authorMap = {}; // map author -> index
     data.forEach(function (datum) {
       var name = datum.commit.author.name;
+      //If unique author detected, then add to list(push())
       if (uniqueAuthors.indexOf(name) === -1) {
         authorMap[name] = uniqueAuthors.length;
         uniqueAuthors.push(name);
@@ -104,7 +105,7 @@ d3DemoApp.controller('AppCtrl', function AppCtrl ($scope, $http) {
   $scope.getCommitData();
 });
 
-//Pass on data to D3JS
+//Pass on data to D3JS. Add graph
 
 d3DemoApp.directive('ghVisualization', function () {
 
