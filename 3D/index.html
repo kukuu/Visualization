@@ -1,0 +1,214 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+	<title>D3</title>
+</head>
+<body>
+	 <div class="widget">
+	    <div class="header">Site Visitors</div>
+	    <div id="chart" class="chart-container"></div>
+	</div>
+</body>
+</html>
+ -->
+
+
+
+<!DOCTYPE html>
+<html >
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/x-icon" href="https://production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" />
+  <link rel="mask-icon" type="" href="https://production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" />
+  <title>CodePen - 3D Pie Chart using d3.js</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  
+  <link rel='stylesheet prefetch' href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,700,500'>
+
+      <style>
+      body {
+    background-color: #1B1F2A;
+    width: 100%;
+    font-family: 'Roboto', sans-serif;
+    height: 100%;
+}
+
+.widget {
+    margin: 0 auto;
+    width:350px;
+    margin-top:50px;
+    background-color: #222D3A;
+    border-radius: 5px;
+    box-shadow: 0px 0px 1px 0px #06060d;
+
+}
+
+.header{
+    background-color: #29384D;
+    height:40px;
+    color:#929DAF;
+    text-align: center;
+    line-height: 40px;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    font-weight: 400;
+    font-size: 1.5em;
+    text-shadow: 1px 1px #06060d;
+}
+
+.chart-container{
+    padding:25px;
+}
+
+.shadow {
+    -webkit-filter: drop-shadow( 0px 3px 3px rgba(0,0,0,.5) );
+    filter: drop-shadow( 0px 3px 3px rgba(0,0,0,.5) );
+}
+
+    </style>
+
+  <script>
+  window.console = window.console || function(t) {};
+</script>
+
+  
+  
+  <script>
+  if (document.location.search.match(/type=embed/gi)) {
+    window.parent.postMessage("resize", "*");
+  }
+</script>
+
+</head>
+
+<body translate="no" >
+
+  <div class="widget">
+    <div class="header">Site Visitors</div>
+    <div id="chart" class="chart-container"></div>
+</div>
+
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js'></script>
+
+    <script>
+    var dataset = [
+        { name: 'Direct', count: 2742 },
+        { name: 'Facebook', count: 2242 },
+        { name: 'Pinterest', count: 3112 },
+        { name: 'Search', count: 937 },
+        { name: 'Others', count: 1450 }
+    ];
+
+    var total=0;
+
+    dataset.forEach(function(d){
+        total+= d.count;
+    });
+
+    var pie=d3.layout.pie()
+            .value(function(d){return d.count})
+            .sort(null);
+
+    var w=300,h=300;
+
+    var outerRadiusArc=w/2;
+    var innerRadiusArc=100;
+    var shadowWidth=10;
+
+    var outerRadiusArcShadow=innerRadiusArc+1;
+    var innerRadiusArcShadow=innerRadiusArc-shadowWidth;
+
+    var color = d3.scale.ordinal()
+     .range(['#41B787', '#6352B9', '#B65480', '#D5735A', '#D7D9DA']);
+
+    var svg=d3.select("#chart")
+            .append("svg")
+            .attr({
+                width:w,
+                height:h,
+                class:'shadow'
+            }).append('g')
+            .attr({
+                transform:'translate('+w/2+','+h/2+')'
+            });
+
+
+    var createChart=function(svg,outerRadius,innerRadius,fillFunction,className){
+
+        var arc=d3.svg.arc()
+                .innerRadius(outerRadius)
+                .outerRadius(innerRadius);
+
+        var path=svg.selectAll('.'+className)
+                .data(pie(dataset))
+                .enter()
+                .append('path')
+                .attr({
+                    class:className,
+                    d:arc,
+                    fill:fillFunction
+                });
+
+        path.transition()
+                .duration(1000)
+                .attrTween('d', function(d) {
+                    var interpolate = d3.interpolate({startAngle: 0, endAngle: 0}, d);
+                    return function(t) {
+                        return arc(interpolate(t));
+                    };
+                });
+    };
+
+    createChart(svg,outerRadiusArc,innerRadiusArc,function(d,i){
+        return color(d.data.name);
+    },'path1');
+
+    createChart(svg,outerRadiusArcShadow,innerRadiusArcShadow,function(d,i){
+        var c=d3.hsl(color(d.data.name));
+        return d3.hsl((c.h+5), (c.s -.07), (c.l -.15));
+    },'path2');
+
+    var addText= function (text,y,size) {
+        svg.append('text')
+                .text(text)
+                .attr({
+                    'text-anchor':'middle',
+                    y:y
+                })
+                .style({
+                    fill:'#929DAF',
+                    'font-size':size
+                });
+    };
+
+    var restOfTheData=function(){
+
+        addText(function(){
+            return numberWithCommas(total);
+        },0,'30px');
+
+
+        addText(function(){
+            return "Page View";
+        },25,'10px');
+
+    };
+
+    setTimeout(restOfTheData,1000);
+
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+  //# sourceURL=pen.js
+  </script>
+
+  
+  
+
+</body>
+</html>
+ 
