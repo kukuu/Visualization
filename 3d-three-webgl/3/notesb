@@ -1,0 +1,13 @@
+Lines 115-120 set up our svg parent object for the parallel coordinate view.
+
+Line 122 sets up the parent object for the WebGL visual.
+
+Line 124-134 sets up a CSV datasource 6×500 with random values ranging from –50 to 50.
+
+Line 136-145 creates our parallel coordinates chart.
+
+Line 147-153 creates the scatterplot.
+
+Line 155-159 we set up a listener to replace the scatterplot with a new one composed of only the selected/brushed data from the parallel coordinate view.  This is kind of cheating, but a corner I am willing to cut for now.  Ideally, we would adhere to the principle of object constancy and update only the data displaying a transition between previous and current state.  Here I am saying “BAM! Here’s a new chart.”  This is good enough for now.
+
+Line 161-162 render the charts.

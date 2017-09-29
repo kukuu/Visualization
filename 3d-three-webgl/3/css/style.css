@@ -1,0 +1,61 @@
+body {
+  margin: 0px;
+  padding: 0px;
+  margin-left: 40%;
+}
+
+#ScatterPlot3D
+{
+  display:block;
+  float:right;
+}
+
+#ParChart {
+  display:block;
+  float:left;
+}
+
+#ParChart textarea
+{
+    width:50%;
+}
+
+#ParChart .textwrapper
+{
+    border:1px solid #999999;
+    margin:5px 0;
+    padding:5px;
+}
+
+#ParChart path
+{
+  fill: none;
+  /*stroke: #ccc;*/
+  stroke-opacity: .9;
+  shape-rendering: crispEdges;
+}
+
+#ParChart .foreground path
+{
+  fill: none;
+  stroke: steelblue;
+  stroke-opacity: .9;
+}
+
+#ParChart .brush .extent
+{
+  fill-opacity: .3;
+  stroke: #fff;
+  shape-rendering: crispEdges;
+}
+
+#ParChart .axis line, #ParChart .axis path
+{
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+#ParChart .axis text
+{
+  text-shadow: 0 1px 0 #fff;
